@@ -2,8 +2,6 @@ package com.solvd.university.university;
 
 import com.solvd.university.address.Address;
 import com.solvd.university.university.person.Rector;
-import com.solvd.university.university.person.Student;
-import com.solvd.university.university.person.Teacher;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,9 +17,6 @@ public class University {
     private TradeUnionCommittee tradeUnionCommittee;
     private Library library;
     private List<Faculty> faculties;
-    private List<Chair> chairs;
-    private List<Student> students;
-    private List<Teacher> teachers;
 
     public Long getId() {
         return id;
@@ -93,29 +88,5 @@ public class University {
 
     public void setFaculties(List<Faculty> faculties) {
         this.faculties = faculties;
-    }
-
-    public List<Chair> getChairs() {
-        return chairs;
-    }
-
-    public void setChairs(List<Chair> chairs) {
-        this.chairs = chairs;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
-    public List<Teacher> getTeachers() {
-        return teachers;
-    }
-
-    public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
     }
 }
