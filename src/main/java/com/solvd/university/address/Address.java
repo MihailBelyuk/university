@@ -2,18 +2,18 @@ package com.solvd.university.address;
 
 public class Address {
 
-    private long id;
+    private Long id;
     private String city;
     private String street;
     private Integer house;
     private Integer flat;
     private Integer index;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

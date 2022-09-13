@@ -7,17 +7,17 @@ import java.util.List;
 
 public class Faculty {
 
-    private long id;
+    private Long id;
     private String name;
     private Dean dean;
     private List<Chair> chairs;
     private List<Student> students;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
