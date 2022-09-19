@@ -7,15 +7,15 @@ import java.util.List;
 
 public class AccountsDepartment {
 
-    private long id;
+    private Long id;
     private HeadAccountant headAccountant;
     private List<Accountant> accountants;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
