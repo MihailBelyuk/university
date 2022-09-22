@@ -6,12 +6,13 @@
 
     <groupId>com.solvd</groupId>
     <artifactId>university</artifactId>
-    <version>8.0.2-SNAPSHOT</version>
+    <version>8.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
         <apache-logger-version>2.18.0</apache-logger-version>
-        <compiler-plugin-version>3.10.1</compiler-plugin-version>
+        <compiler-plugin-version>3.10.0</compiler-plugin-version>
+        <mysql-connector-version>8.0.30</mysql-connector-version>
     </properties>
 
     <dependencies>
@@ -24,6 +25,11 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>${apache-logger-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-version}</version>
         </dependency>
     </dependencies>
 
