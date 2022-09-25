@@ -1,6 +1,6 @@
-package com.solvd.university.service.impl;
+package com.solvd.university.service.mybatisimpl;
 
-import com.solvd.university.dao.impl.AddressDaoImpl;
+import com.solvd.university.dao.mybatisimpl.AddressDaoImpl;
 import com.solvd.university.domain.address.Address;
 import com.solvd.university.domain.exception.EmptyListException;
 import com.solvd.university.domain.exception.NotFullInformationProvidedException;

@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface IFacultyService {
 
-    void addFacultyRecord(Faculty faculty, Long deansId, Long universitiesId);
+    void create(Faculty faculty, Long deansId, Long universitiesId);
 
-    Faculty findFacultyById(Long id);
+    Faculty getById(Long id);
 
-    void updateFacultyRecord(Faculty faculty, Long deansId, Long universitiesId);
+    void update(Faculty faculty, Long deansId, Long universitiesId);
 
-    void deleteFaculty(Faculty faculty);
+    void delete(Faculty faculty);
 
-    List<Faculty> showAllFaculties();
+    List<Faculty> getAll();
 
 }

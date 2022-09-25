@@ -22,11 +22,11 @@ public class ChairDaoImpl implements IChairDao {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     private static final String CREATE_CHAIR = "insert into chairs(name) values (?)";
-    private static final String FIND_BY_ID = "select c.id as chair_id, c.name as chair_name,t.id as teacher_id, " +
+    private static final String FIND_BY_ID = "select c.id as chair_id, c.name as chair_name, t.id as teacher_id, " +
             "t.first_name as teacher_first_name, t.last_name as teacher_last_name from chairs c " +
-            "left join teachers t on t.chairs_id=c.id where c.id=?";
-    private static final String UPDATE = "update chairs set name=? where id=?";
-    private static final String DELETE = "delete from chairs where id=?";
+            "left join teachers t on t.chairs_id = c.id where c.id = ?";
+    private static final String UPDATE = "update chairs set name = ? where id = ?";
+    private static final String DELETE = "delete from chairs where id = ?";
     private static final String FIND_ALL = "select id as chair_id, name as chair_name from chairs";
 
     private static final String CHAIR_ID = "chair_id";

@@ -12,6 +12,8 @@ public class Dean {
     private String lastName;
     private LocalDate birthday;
     private Address address;
+    private BigDecimal salary;
+
 
     public Long getId() {
         return id;
@@ -28,8 +30,6 @@ public class Dean {
     public void setAddress(Address address) {
         this.address = address;
     }
-
-    private BigDecimal salary;
 
     public String getFirstName() {
         return firstName;

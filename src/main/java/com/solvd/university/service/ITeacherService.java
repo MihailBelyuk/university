@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface ITeacherService {
 
-    Teacher findTeacher(Long id);
+    void create(Teacher teacher, Long addressesId, Long chairsId);
 
-    List<Teacher> findAllTeachers();
+    Teacher getById(Long id);
 
-    void addTeacher(Teacher teacher, Long addressesId, Long chairsId);
+    void update(Teacher teacher, Long addressesId, Long chairsId);
 
-    void updateTeacherInfo(Teacher teacher, Long addressesId, Long chairsId);
+    void delete(Teacher teacher);
 
-    void deleteTeacher(Teacher teacher);
+    List<Teacher> getAll();
 
 }

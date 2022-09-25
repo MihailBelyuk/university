@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.university.dao.IAddressDao">
+
+    <insert id="create" keyProperty="id" useGeneratedKeys="true">
+        insert into addresses(city, street, house, flat, post_index) values (#{city}, #{street}, #{house}, #{flat},
+        #{index})
+    </insert>
+
+    <select id="findById" resultMap="AddressResultMap">
+        select id as address_id, city as address_city, street as address_street, house as address_house, flat as
+        address_flat, post_index as address_post_index from addresses where id = #{id}
+    </select>
+
+    <update id="update">
+        update addresses set city = #{city}, street = #{street}, house = #{house}, flat = #{flat}, post_index = #{index}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from addresses where id = #{id}
+    </delete>
+
+    <select id="findAll" resultMap="AddressResultMap">
+        select id as address_id, city as address_city, street as address_street from addresses
+    </select>
+
+    <resultMap id="AddressResultMap" type="com.solvd.university.domain.address.Address" autoMapping="false">
+        <id property="id" column="address_id"/>
+        <result property="city" column="address_city"/>
+        <result property="street" column="address_street"/>
+        <result property="house" column="address_house"/>
+        <result property="flat" column="address_flat"/>
+        <result property="index" column="address_post_index"/>
+    </resultMap>
+</mapper>

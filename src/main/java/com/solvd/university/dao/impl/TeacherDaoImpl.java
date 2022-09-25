@@ -24,22 +24,22 @@ public class TeacherDaoImpl implements ITeacherDao {
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     private static final String FIND_BY_ID = "select t.id as teacher_id," +
-            "t.first_name as teacher_first_name, t.last_name as teacher_last_name,t.salary as teacher_salary," +
-            "t.birthday as teacher_birthday, t.academic_status as teacher_academic_status, a.id as address_id," +
-            "a.city,a.street,a.house, a.flat, a.post_index " +
-            "from teachers t left join addresses a on t.addresses_id=a.id where t.id=?";
-    private static final String FIND_ALL = "select t.id as teacher_id," +
-            "t.first_name as teacher_first_name, t.last_name as teacher_last_name,t.salary as teacher_salary," +
-            "t.birthday as teacher_birthday, t.academic_status as teacher_academic_status,a.id as address_id, a.city,a.street," +
-            "a.house, a.flat, a.post_index from teachers t left join addresses a on t.addresses_id=a.id";
-    private static final String INSERT = "create into teachers(first_name,last_name, birthday," +
-            " salary, academic_status, chairs_id, addresses_id) values (?,?,?,?,?,?,?)";
-    private static final String DELETE = "delete from teachers where id=?";
-    private static final String UPDATE_FULL_INFO = "update first_name, last_name, birthday, salary," +
-            "academic_status, addresses_id,chairs_id set (?,?,?,?,?,?,?) where id=?";
-    private static final String FIND_TEACHERS_BY_CHAIR = "select id as teacher_id, first_name as teacher_first_name," +
-            " last_name as teacher_last_name, birthday as teacher_birthday, salary as teacher_salary," +
-            " academic_status as teacher_academic_status from teachers where chairs_id = ?";
+            "t.first_name as teacher_first_name, t.last_name as teacher_last_name, t.salary as teacher_salary, " +
+            "t.birthday as teacher_birthday, t.academic_status as teacher_academic_status, a.id as address_id, " +
+            "a.city, a.street, a.house, a.flat, a.post_index " +
+            "from teachers t left join addresses a on t.addresses_id = a.id where t.id = ?";
+    private static final String FIND_ALL = "select t.id as teacher_id, " +
+            "t.first_name as teacher_first_name, t.last_name as teacher_last_name,t.salary as teacher_salary, " +
+            "t.birthday as teacher_birthday, t.academic_status as teacher_academic_status, a.id as address_id, a.city, a.street," +
+            "a.house, a.flat, a.post_index from teachers t left join addresses a on t.addresses_id = a.id";
+    private static final String INSERT = "create into teachers(first_name,last_name, birthday, " +
+            "salary, academic_status, chairs_id, addresses_id) values (?, ?, ?, ?, ?, ?, ?)";
+    private static final String DELETE = "delete from teachers where id = ?";
+    private static final String UPDATE_FULL_INFO = "update first_name, last_name, birthday, salary, " +
+            "academic_status, addresses_id, chairs_id set (?, ?, ?, ?, ?, ?, ?) where id = ?";
+    private static final String FIND_TEACHERS_BY_CHAIR = "select id as teacher_id, first_name as teacher_first_name, " +
+            "last_name as teacher_last_name, birthday as teacher_birthday, salary as teacher_salary, " +
+            "academic_status as teacher_academic_status from teachers where chairs_id = ?";
 
     private static final String TEACHER_ID = "teacher_id";
     private static final String TEACHER_SALARY = "teacher_salary";

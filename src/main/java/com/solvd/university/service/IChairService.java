@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface IChairService {
 
-    Chair findChairById(Long id);
+    void create(Chair chair);
 
-    void addChairRecord(Chair chair);
+    Chair getById(Long id);
 
-    void updateChair(Chair chair);
+    void update(Chair chair);
 
-    void deleteChair(Chair chair);
+    void delete(Chair chair);
 
-    List<Chair> showAllChairs();
+    List<Chair> getAll();
 
 }

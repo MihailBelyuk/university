@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.university.dao.ITeacherDao">
+
+    <sql id="findIdAndName">
+        select id as teacher_id, first_name as teacher_first_name, last_name as teacher_last_name
+    </sql>
+
+    <insert id="create" keyProperty="arg0.id" useGeneratedKeys="true">
+        insert into teachers(first_name, last_name, birthday, salary, academic_status,chairs_id, addresses_id)
+        values(#{arg0.firstName}, #{arg0.lastName}, #{arg0.birthday}, #{arg0.salary}, #{arg0.academicStatus}, #{arg2},
+        #{arg1})
+    </insert>
+
+    <select id="findById" resultMap="TeacherResultMap">
+        <include refid="findIdAndName"/>
+        from teachers where id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="TeacherResultMap">
+        <include refid="findIdAndName"/>
+        from teachers
+    </select>
+
+    <delete id="delete">
+        delete from teachers where id = #{id}
+    </delete>
+
+    <update id="update">
+        update teachers set first_name = #{arg0.firstName} where id = #{arg0.id}
+    </update>
+
+    <resultMap id="TeacherResultMap" type="com.solvd.university.domain.university.person.Teacher">
+        <id property="id" column="teacher_id"/>
+        <result property="firstName" column="teacher_first_name"/>
+        <result property="lastName" column="teacher_last_name"/>
+    </resultMap>
+</mapper>

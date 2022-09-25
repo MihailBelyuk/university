@@ -9,11 +9,11 @@ public interface IFacultyDao {
 
     void create(Faculty faculty, Long deansId, Long universitiesId);
 
+    Optional<Faculty> findById(Long id);
+
     void update(Faculty faculty, Long deansId, Long universitiesId);
 
     void delete(Faculty faculty);
-
-    Optional<Faculty> findById(Long id);
 
     List<Faculty> findAll();
 

@@ -22,17 +22,17 @@ public class DeanDaoImpl implements IDeanDao {
     private static final Logger LOGGER = LogManager.getLogger(DeanDaoImpl.class);
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
-    private static final String CREATE_DEAN = "create into deans(first_name, last_name,birthday, " +
-            "salary, addresses_id values (?,?,?,?,?)";
+    private static final String CREATE_DEAN = "create into deans(first_name, last_name, birthday, " +
+            "salary, addresses_id values (?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID = "select id as dean_id, first_name as dean_name, " +
-            "last_name as dean_last_name, birthday as dean_birthday, salary as dean_salary where id=?";
-    private static final String UPDATE = "update deans set first_name = ?, last_name = ?, birthday=?, salary = ?," +
-            "addresses_id=? where id=?";
-    private static final String DELETE = "delete from deans where id=?";
+            "last_name as dean_last_name, birthday as dean_birthday, salary as dean_salary where id = ?";
+    private static final String UPDATE = "update deans set first_name = ?, last_name = ?, birthday = ?, salary = ?, " +
+            "addresses_id = ? where id = ?";
+    private static final String DELETE = "delete from deans where id = ?";
     private static final String FIND_ALL = "select d.id as dean_id, d.first_name as dean_first_name, " +
             "d.last_name as dean_last_name, d.birthday as dean_birthday, d.salary as dean_salary, " +
             "a.id as address_id from deans d left join addresses a on " +
-            "d.addresses_id =a.id";
+            "d.addresses_id = a.id";
     private static final String ADDRESS_ID = "address_id";
 
     private static final String DEAN_ID = "dean_id";

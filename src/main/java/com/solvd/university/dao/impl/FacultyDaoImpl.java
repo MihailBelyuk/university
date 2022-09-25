@@ -2,7 +2,6 @@ package com.solvd.university.dao.impl;
 
 import com.solvd.university.dao.ConnectionPool;
 import com.solvd.university.dao.IFacultyDao;
-import com.solvd.university.domain.address.Address;
 import com.solvd.university.domain.exception.CreateFailedException;
 import com.solvd.university.domain.exception.DeleteFailedException;
 import com.solvd.university.domain.exception.RetrieveInformationFailedException;
@@ -23,15 +22,14 @@ public class FacultyDaoImpl implements IFacultyDao {
     private static final Logger LOGGER = LogManager.getLogger(FacultyDaoImpl.class);
     private static final ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
-    private static final String CREATE_FACULTY = "insert into faculties (name, universities_id, deans_id) values (?,?,?)";
-    private static final String UPDATE_FACULTY_NAME = "update faculties set name = ? where id=?";
+    private static final String CREATE_FACULTY = "insert into faculties (name, universities_id, deans_id) values (?, ?, ?)";
+    private static final String UPDATE_FACULTY_NAME = "update faculties set name = ? where id = ?";
     private static final String DELETE_FACULTY = "delete from faculties where id = ?";
-    private static final String FIND_FACULTY_INFO = "select f.id as faculty_id, f.name as faculty_name, c.id as chair_id," +
-            " c.name as chair_name , t.first_name as teacher_first_name, a.city from faculties f " +
-            "left join faculty_chairs fc on f.id=fc.faculty_id " +
-            "left join chairs c on c.id=fc.chair_id " +
-            "left join teachers t  on t.chairs_id = c.id " +
-            "left join addresses a on t.addresses_id=a.id where f.id = ?";
+    private static final String FIND_FACULTY_INFO = "select f.id as faculty_id, f.name as faculty_name, " +
+            "c.id as chair_id, c.name as chair_name, t.first_name as teacher_first_name from faculties f " +
+            "left join faculty_chairs fc on f.id = fc.faculty_id " +
+            "left join chairs c on fc.chair_id=c.id " +
+            "left join teachers t on t.chairs_id = c.id where f.id = ?";
     private static final String FIND_ALL = "select id as faculty_id, name as faculty_name from faculties";
 
     private static final String FACULTY_ID = "faculty_id";
@@ -87,23 +85,23 @@ public class FacultyDaoImpl implements IFacultyDao {
         Faculty faculty = null;
         List<Chair> chairs = new ArrayList<>();
         List<Teacher> teachers = new ArrayList<>();
+        Chair addedChair;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_FACULTY_INFO)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Address address = new Address();
-                address.setCity(resultSet.getString("city"));
-                Teacher teacher = new Teacher();
-                teacher.setFirstName(resultSet.getString("teacher_first_name"));
-                teacher.setAddress(address);
-                teachers.add(teacher);
-                Chair chair = ChairDaoImpl.mapChair(resultSet);
-                chair.setTeachers(teachers);
-                chairs.add(chair);
+                Teacher teacher = mapTeacher(resultSet);
+                Long teacherChairId = resultSet.getLong("teacher_chairs_id");
                 faculty = mapFaculty(resultSet);
-                faculty.setChairs(chairs);
+                Chair newChair = mapChairs(resultSet);
+                if (chairs.isEmpty()) {
+                    chairs.add(newChair);
+                }
+                addedChair = new Chair();
+                chairs = mapTeachersOnChair(chairs, teacher, teacherChairId);
             }
-        } catch (SQLException e) {
+        } catch (
+                SQLException e) {
             LOGGER.error("Failed to retrieve faculty information.", e);
             throw new RetrieveInformationFailedException("Failed to retrieve faculty information.", e);
         } finally {
@@ -135,4 +133,28 @@ public class FacultyDaoImpl implements IFacultyDao {
         faculty.setName(resultSet.getString(FACULTY_NAME));
         return faculty;
     }
+
+    public static Chair mapChairs(ResultSet resultSet) throws SQLException {
+        Chair chair = new Chair();
+        chair.setName(resultSet.getString("chair_name"));
+        chair.setId(resultSet.getLong("chair_id"));
+        chair.setTeachers(new ArrayList<>());
+        return chair;
+    }
+
+    public static Teacher mapTeacher(ResultSet resultSet) throws SQLException {
+        Teacher teacher = new Teacher();
+        teacher.setFirstName(resultSet.getString("teacher_first_name"));
+        return teacher;
+    }
+
+    public List<Chair> mapTeachersOnChair(List<Chair> chairs, Teacher teacher, Long teacherChairsId) {
+        chairs.stream()
+                .filter(chair -> chair.getId().equals(teacherChairsId))
+                .findFirst()
+                .map(chair1 -> chair1.getTeachers().add(teacher));
+        return chairs;
+    }
 }
+
+

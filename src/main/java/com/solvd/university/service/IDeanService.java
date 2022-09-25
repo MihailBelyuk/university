@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface IDeanService {
 
-    void addDeanRecord(Dean dean, Long addressesId);
+    void create(Dean dean, Long addressesId);
 
-    void updateDeanRecord(Dean dean, Long addressesId);
+    Dean getById(Long id);
 
-    void deleteDeanRecord(Dean dean);
+    void update(Dean dean, Long addressesId);
 
-    Dean findDeanById(Long id);
+    void delete(Dean dean);
 
-    List<Dean> showAllDeans();
+    List<Dean> getAll();
 
 }
 

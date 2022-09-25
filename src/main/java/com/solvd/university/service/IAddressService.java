@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface IAddressService {
 
-    void addAddress(Address address);
+    void create(Address address);
 
-    void deleteAddress(Address address);
+    Address getById(Long id);
 
-    void updateAddress(Address address);
+    void update(Address address);
 
-    Address findAddressById(Long id);
+    void delete(Address address);
 
-    List<Address> showAllAddresses();
+    List<Address> getAllAddresses();
 
 }

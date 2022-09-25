@@ -1,6 +1,6 @@
-package com.solvd.university.service.impl;
+package com.solvd.university.service.mybatisimpl;
 
-import com.solvd.university.dao.impl.TeacherDaoImpl;
+import com.solvd.university.dao.mybatisimpl.TeacherDaoImpl;
 import com.solvd.university.domain.exception.EmptyListException;
 import com.solvd.university.domain.exception.NotFullInformationProvidedException;
 import com.solvd.university.domain.exception.ResourceNotFoundException;
