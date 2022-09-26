@@ -1,4 +1,4 @@
-package com.solvd.university.dao.impl;
+package com.solvd.university.dao.jdbcimpl;
 
 import com.solvd.university.dao.ConnectionPool;
 import com.solvd.university.dao.IDeanDao;
@@ -40,7 +40,6 @@ public class DeanDaoImpl implements IDeanDao {
     private static final String DEAN_LAST_NAME = "dean_last_name";
     private static final String DEAN_BIRTHDAY = "dean_birthday";
     private static final String DEAN_SALARY = "dean_salary";
-
 
     @Override
     public void create(Dean dean, Long addressesId) {

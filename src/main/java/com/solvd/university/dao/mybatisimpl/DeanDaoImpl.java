@@ -3,7 +3,6 @@ package com.solvd.university.dao.mybatisimpl;
 import com.solvd.university.dao.IDeanDao;
 import com.solvd.university.dao.MyBatisConfig;
 import com.solvd.university.domain.university.person.Dean;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.Optional;
 public class DeanDaoImpl implements IDeanDao {
 
     @Override
-    public void create(Dean dean,Long addressesId) {
+    public void create(Dean dean, Long addressesId) {
         SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
         IDeanDao deanDao = session.getMapper(IDeanDao.class);
         deanDao.create(dean, addressesId);

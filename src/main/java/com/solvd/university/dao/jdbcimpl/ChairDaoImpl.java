@@ -1,4 +1,4 @@
-package com.solvd.university.dao.impl;
+package com.solvd.university.dao.jdbcimpl;
 
 import com.solvd.university.dao.ConnectionPool;
 import com.solvd.university.dao.IChairDao;
@@ -78,7 +78,6 @@ public class ChairDaoImpl implements IChairDao {
         }
         return Optional.ofNullable(chair);
     }
-
 
     @Override
     public void update(Chair chair) {

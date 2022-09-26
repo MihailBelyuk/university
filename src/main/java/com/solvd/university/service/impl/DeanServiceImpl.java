@@ -1,6 +1,7 @@
 package com.solvd.university.service.impl;
 
-import com.solvd.university.dao.impl.DeanDaoImpl;
+import com.solvd.university.dao.jdbcimpl.DeanDaoImpl;
+//import com.solvd.university.dao.mybatisimpl.DeanDaoImpl;
 import com.solvd.university.domain.exception.EmptyListException;
 import com.solvd.university.domain.exception.NotFullInformationProvidedException;
 import com.solvd.university.domain.exception.ResourceNotFoundException;
@@ -17,7 +18,7 @@ public class DeanServiceImpl implements IDeanService {
 
     private final DeanDaoImpl deanDao;
 
-    DeanServiceImpl() {
+    public DeanServiceImpl() {
         deanDao = new DeanDaoImpl();
     }
 

@@ -44,5 +44,4 @@ public class TeacherDaoImpl implements ITeacherDao {
         ITeacherDao teacherDao = session.getMapper(ITeacherDao.class);
         return teacherDao.findAll();
     }
-
 }

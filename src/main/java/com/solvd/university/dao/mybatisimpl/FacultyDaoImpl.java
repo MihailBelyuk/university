@@ -44,5 +44,4 @@ public class FacultyDaoImpl implements IFacultyDao {
         IFacultyDao facultyDao = session.getMapper(IFacultyDao.class);
         return facultyDao.findAll();
     }
-
 }

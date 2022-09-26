@@ -14,6 +14,6 @@ public interface IAddressService {
 
     void delete(Address address);
 
-    List<Address> getAllAddresses();
+    List<Address> getAll();
 
 }

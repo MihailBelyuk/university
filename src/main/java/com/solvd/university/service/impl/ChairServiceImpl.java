@@ -1,6 +1,7 @@
 package com.solvd.university.service.impl;
 
-import com.solvd.university.dao.impl.ChairDaoImpl;
+import com.solvd.university.dao.jdbcimpl.ChairDaoImpl;
+//import com.solvd.university.dao.mybatisimpl.ChairDaoImpl;
 import com.solvd.university.domain.exception.EmptyListException;
 import com.solvd.university.domain.exception.NotFullInformationProvidedException;
 import com.solvd.university.domain.exception.ResourceNotFoundException;

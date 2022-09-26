@@ -1,4 +1,4 @@
-package com.solvd.university.dao.impl;
+package com.solvd.university.dao.jdbcimpl;
 
 import com.solvd.university.dao.ConnectionPool;
 import com.solvd.university.dao.IFacultyDao;
@@ -26,7 +26,9 @@ public class FacultyDaoImpl implements IFacultyDao {
     private static final String UPDATE_FACULTY_NAME = "update faculties set name = ? where id = ?";
     private static final String DELETE_FACULTY = "delete from faculties where id = ?";
     private static final String FIND_FACULTY_INFO = "select f.id as faculty_id, f.name as faculty_name, " +
-            "c.id as chair_id, c.name as chair_name, t.first_name as teacher_first_name from faculties f " +
+            "c.id as chair_id, c.name as chair_name, t.id as teacher_id, t.first_name as teacher_first_name, " +
+            "t.last_name as teacher_last_name, t.birthday as teacher_birthday, t.salary as teacher_salary, " +
+            "t.academic_status as teacher_academic_status from faculties f " +
             "left join faculty_chairs fc on f.id = fc.faculty_id " +
             "left join chairs c on fc.chair_id=c.id " +
             "left join teachers t on t.chairs_id = c.id where f.id = ?";
@@ -84,24 +86,21 @@ public class FacultyDaoImpl implements IFacultyDao {
         Connection connection = CONNECTION_POOL.getConnection();
         Faculty faculty = null;
         List<Chair> chairs = new ArrayList<>();
-        List<Teacher> teachers = new ArrayList<>();
-        Chair addedChair;
+        Chair chair = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_FACULTY_INFO)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Teacher teacher = mapTeacher(resultSet);
-                Long teacherChairId = resultSet.getLong("teacher_chairs_id");
                 faculty = mapFaculty(resultSet);
-                Chair newChair = mapChairs(resultSet);
-                if (chairs.isEmpty()) {
-                    chairs.add(newChair);
-                }
-                addedChair = new Chair();
-                chairs = mapTeachersOnChair(chairs, teacher, teacherChairId);
+                Chair current = mapChairs(resultSet);
+                Teacher teacher = TeacherDaoImpl.mapTeacher(resultSet);
+                chair = getChair(chairs, chair, current, teacher);
             }
-        } catch (
-                SQLException e) {
+            chairs.add(chair);
+            if (faculty != null) {
+                faculty.setChairs(chairs);
+            }
+        } catch (SQLException e) {
             LOGGER.error("Failed to retrieve faculty information.", e);
             throw new RetrieveInformationFailedException("Failed to retrieve faculty information.", e);
         } finally {
@@ -128,9 +127,11 @@ public class FacultyDaoImpl implements IFacultyDao {
     }
 
     public static Faculty mapFaculty(ResultSet resultSet) throws SQLException {
+        List<Chair> chairs = new ArrayList<>();
         Faculty faculty = new Faculty();
         faculty.setId(resultSet.getLong(FACULTY_ID));
         faculty.setName(resultSet.getString(FACULTY_NAME));
+        faculty.setChairs(chairs);
         return faculty;
     }
 
@@ -142,18 +143,18 @@ public class FacultyDaoImpl implements IFacultyDao {
         return chair;
     }
 
-    public static Teacher mapTeacher(ResultSet resultSet) throws SQLException {
-        Teacher teacher = new Teacher();
-        teacher.setFirstName(resultSet.getString("teacher_first_name"));
-        return teacher;
-    }
-
-    public List<Chair> mapTeachersOnChair(List<Chair> chairs, Teacher teacher, Long teacherChairsId) {
-        chairs.stream()
-                .filter(chair -> chair.getId().equals(teacherChairsId))
-                .findFirst()
-                .map(chair1 -> chair1.getTeachers().add(teacher));
-        return chairs;
+    private Chair getChair(List<Chair> chairs, Chair chair, Chair current, Teacher teacher) {
+        if (chair == null) {
+            current.getTeachers().add(teacher);
+            chair = current;
+        } else if (current.getId().equals(chair.getId())) {
+            chair.getTeachers().add(teacher);
+        } else {
+            chairs.add(chair);
+            current.getTeachers().add(teacher);
+            chair = current;
+        }
+        return chair;
     }
 }
 

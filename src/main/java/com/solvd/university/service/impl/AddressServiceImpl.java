@@ -1,6 +1,6 @@
 package com.solvd.university.service.impl;
 
-import com.solvd.university.dao.impl.AddressDaoImpl;
+import com.solvd.university.dao.jdbcimpl.AddressDaoImpl;
 import com.solvd.university.domain.address.Address;
 import com.solvd.university.domain.exception.EmptyListException;
 import com.solvd.university.domain.exception.NotFullInformationProvidedException;
@@ -36,7 +36,7 @@ public class AddressServiceImpl implements IAddressService {
 
     @Override
     public void delete(Address address) {
-        addressDao.delete(getAllAddresses().stream()
+        addressDao.delete(getAll().stream()
                 .filter(address1 -> address1.getId().equals(address.getId()))
                 .findAny()
                 .orElseThrow(() -> new ResourceNotFoundException("No record matching " + address + " in the DB.")));
@@ -49,7 +49,7 @@ public class AddressServiceImpl implements IAddressService {
             LOGGER.error("Provided address information is incomplete");
             throw new NotFullInformationProvidedException("Provided address information is incomplete");
         }
-        getAllAddresses().stream()
+        getAll().stream()
                 .filter(address1 -> address1.getId().equals(address.getId()))
                 .findFirst()
                 .ifPresentOrElse((address1) -> addressDao.update(address), () -> create(address));
@@ -62,7 +62,7 @@ public class AddressServiceImpl implements IAddressService {
     }
 
     @Override
-    public List<Address> getAllAddresses() {
+    public List<Address> getAll() {
         List<Address> addresses = addressDao.findAll();
         if (addresses.isEmpty()) {
             LOGGER.error("No address records retrieved.");
