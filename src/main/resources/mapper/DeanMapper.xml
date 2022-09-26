@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.university.dao.IDeanDao">
 
-    <insert id="create" keyProperty="arg0.id" useGeneratedKeys="true">
-        insert into deans(first_name, last_name, birthday, salary, addresses_id) values (#{arg0.firstName},
-        #{arg0.lastName}, #{arg0.birthday}, #{arg0.salary}, #{arg1})
+    <insert id="create" keyProperty="dean.id" useGeneratedKeys="true">
+        insert into deans(first_name, last_name, birthday, salary, addresses_id) values (#{dean.firstName},
+        #{dean.lastName}, #{dean.birthday}, #{dean.salary}, #{addressId})
     </insert>
 
     <select id="findById" resultMap="DeanResultMap">
@@ -15,7 +15,7 @@
     </select>
 
     <update id="update">
-        update deans set first_name = #{arg0.firstName}, addresses_id = #{arg1} where id = #{arg0.id}
+        update deans set first_name = #{dean.firstName}, addresses_id = #{addressId} where id = #{dean.id}
     </update>
 
     <delete id="delete">
@@ -23,8 +23,8 @@
     </delete>
 
     <select id="findAll" resultMap="DeanResultMap">
-        select d.first_name as dean_first_name, d.last_name as dean_last_name, a.city as address_city from deans d left
-        join addresses a on a.id = d.addresses_id
+        select d.first_name as dean_first_name, d.last_name as dean_last_name, a.id as address_id, a.city as
+        address_city, a.street as address_street from deans d left join addresses a on a.id = d.addresses_id
     </select>
 
     <resultMap id="DeanResultMap" type="com.solvd.university.domain.university.person.Dean" autoMapping="false">
@@ -33,10 +33,6 @@
         <result property="lastName" column="dean_last_name"/>
         <result property="birthday" column="dean_birthday"/>
         <result property="salary" column="dean_salary"/>
-        <association property="address">
-            <result property="city" column="address_city"/>
-            <result property="street" column="address_street"/>
-            <result property="house" column="address_house"/>
-        </association>
+        <association property="address" resultMap="com.solvd.university.dao.IAddressDao.AddressResultMap"/>
     </resultMap>
 </mapper>

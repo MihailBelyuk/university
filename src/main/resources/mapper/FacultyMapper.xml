@@ -3,14 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.university.dao.IFacultyDao">
 
-    <insert id="create" keyProperty="arg0.id" useGeneratedKeys="true">
-        insert into faculties(name, deans_id, universities_id) values(#{arg0.name}, #{arg1}, #{arg2})
+    <insert id="create" keyProperty="faculty.id" useGeneratedKeys="true">
+        insert into faculties(name, deans_id, universities_id) values(#{faculty.name}, #{deanId}, #{universityId})
     </insert>
 
     <select id="findById" resultMap="FacultyResultMap">
         select f.id as faculty_id, f.name as faculty_name, c.id as chair_id, c.name as chair_name, t.first_name as
-        teacher_first_name from faculties f left join faculty_chairs fc on f.id = fc.faculty_id left join chairs c on
-        fc.chair_id=c.id left join teachers t on t.chairs_id = c.id where f.id = #{id}
+        teacher_first_name, t.last_name as teacher_last_name, t.id as teacher_id, a.city as address_city,
+        a.street as address_street, a.house as address_house from faculties f left join
+        faculty_chairs fc on f.id = fc.faculty_id left join chairs c on fc.chair_id=c.id left join teachers t on
+        t.chairs_id = c.id left join addresses a on t.addresses_id = a.id where f.id = #{id}
     </select>
 
     <delete id="delete">
@@ -18,7 +20,7 @@
     </delete>
 
     <update id="update">
-        update faculties set name = #{arg0.name} where id = #{arg0.id}
+        update faculties set name = #{faculty.name} where id = #{faculty.id}
     </update>
 
     <select id="findAll" resultMap="FacultyResultMap">
@@ -30,15 +32,6 @@
     <resultMap id="FacultyResultMap" type="com.solvd.university.domain.university.Faculty" autoMapping="false">
         <id property="id" column="faculty_id"/>
         <result property="name" column="faculty_name"/>
-        <collection property="chairs" ofType="com.solvd.university.domain.university.Chair">
-            <id property="id" column="chair_id"/>
-            <result property="name" column="chair_name"/>
-            <collection property="teachers" ofType="com.solvd.university.domain.university.person.Teacher">
-                <result property="firstName" column="teacher_first_name"/>
-                <association property="address">
-                    <result property="city" column="address_city"/>
-                </association>
-            </collection>
-        </collection>
+        <collection property="chairs" resultMap="com.solvd.university.dao.IChairDao.ChairResultMap"/>
     </resultMap>
 </mapper>

@@ -1,6 +1,7 @@
 package com.solvd.university.service.impl;
 
-import com.solvd.university.dao.jdbcimpl.AddressDaoImpl;
+//import com.solvd.university.dao.jdbcimpl.AddressDaoImpl;
+import com.solvd.university.dao.mybatisimpl.AddressDaoImpl;
 import com.solvd.university.domain.address.Address;
 import com.solvd.university.domain.exception.EmptyListException;
 import com.solvd.university.domain.exception.NotFullInformationProvidedException;

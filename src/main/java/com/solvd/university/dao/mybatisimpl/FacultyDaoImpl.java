@@ -12,36 +12,41 @@ public class FacultyDaoImpl implements IFacultyDao {
 
     @Override
     public void create(Faculty faculty, Long deansId, Long universitiesId) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IFacultyDao facultyDao = session.getMapper(IFacultyDao.class);
-        facultyDao.create(faculty, deansId, universitiesId);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IFacultyDao facultyDao = session.getMapper(IFacultyDao.class);
+            facultyDao.create(faculty, deansId, universitiesId);
+        }
     }
 
     @Override
     public void update(Faculty faculty, Long deansId, Long universitiesId) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IFacultyDao facultyDao = session.getMapper(IFacultyDao.class);
-        facultyDao.update(faculty, deansId, universitiesId);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IFacultyDao facultyDao = session.getMapper(IFacultyDao.class);
+            facultyDao.update(faculty, deansId, universitiesId);
+        }
     }
 
     @Override
     public void delete(Faculty faculty) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IFacultyDao facultyDao = session.getMapper(IFacultyDao.class);
-        facultyDao.delete(faculty);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IFacultyDao facultyDao = session.getMapper(IFacultyDao.class);
+            facultyDao.delete(faculty);
+        }
     }
 
     @Override
     public Optional<Faculty> findById(Long id) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IFacultyDao facultyDao = session.getMapper(IFacultyDao.class);
-        return facultyDao.findById(id);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IFacultyDao facultyDao = session.getMapper(IFacultyDao.class);
+            return facultyDao.findById(id);
+        }
     }
 
     @Override
     public List<Faculty> findAll() {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IFacultyDao facultyDao = session.getMapper(IFacultyDao.class);
-        return facultyDao.findAll();
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IFacultyDao facultyDao = session.getMapper(IFacultyDao.class);
+            return facultyDao.findAll();
+        }
     }
 }

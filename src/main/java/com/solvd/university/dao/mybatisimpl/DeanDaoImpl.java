@@ -12,36 +12,41 @@ public class DeanDaoImpl implements IDeanDao {
 
     @Override
     public void create(Dean dean, Long addressesId) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IDeanDao deanDao = session.getMapper(IDeanDao.class);
-        deanDao.create(dean, addressesId);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IDeanDao deanDao = session.getMapper(IDeanDao.class);
+            deanDao.create(dean, addressesId);
+        }
     }
 
     @Override
     public Optional<Dean> findById(Long id) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IDeanDao deanDao = session.getMapper(IDeanDao.class);
-        return deanDao.findById(id);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IDeanDao deanDao = session.getMapper(IDeanDao.class);
+            return deanDao.findById(id);
+        }
     }
 
     @Override
     public void update(Dean dean, Long addressesId) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IDeanDao deanDao = session.getMapper(IDeanDao.class);
-        deanDao.update(dean, addressesId);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IDeanDao deanDao = session.getMapper(IDeanDao.class);
+            deanDao.update(dean, addressesId);
+        }
     }
 
     @Override
     public void delete(Dean dean) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IDeanDao deanDao = session.getMapper(IDeanDao.class);
-        deanDao.delete(dean);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IDeanDao deanDao = session.getMapper(IDeanDao.class);
+            deanDao.delete(dean);
+        }
     }
 
     @Override
     public List<Dean> findAll() {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IDeanDao deanDao = session.getMapper(IDeanDao.class);
-        return deanDao.findAll();
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IDeanDao deanDao = session.getMapper(IDeanDao.class);
+            return deanDao.findAll();
+        }
     }
 }

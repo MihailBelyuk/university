@@ -12,36 +12,41 @@ public class AddressDaoImpl implements IAddressDao {
 
     @Override
     public void create(Address address) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IAddressDao addressDao = session.getMapper(IAddressDao.class);
-        addressDao.create(address);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IAddressDao addressDao = session.getMapper(IAddressDao.class);
+            addressDao.create(address);
+        }
     }
 
     @Override
     public Optional<Address> findById(Long id) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IAddressDao addressDao = session.getMapper(IAddressDao.class);
-        return addressDao.findById(id);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IAddressDao addressDao = session.getMapper(IAddressDao.class);
+            return addressDao.findById(id);
+        }
     }
 
     @Override
     public void update(Address address) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IAddressDao addressDao = session.getMapper(IAddressDao.class);
-        addressDao.update(address);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IAddressDao addressDao = session.getMapper(IAddressDao.class);
+            addressDao.update(address);
+        }
     }
 
     @Override
     public void delete(Address address) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IAddressDao addressDao = session.getMapper(IAddressDao.class);
-        addressDao.delete(address);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IAddressDao addressDao = session.getMapper(IAddressDao.class);
+            addressDao.delete(address);
+        }
     }
 
     @Override
     public List<Address> findAll() {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IAddressDao addressDao = session.getMapper(IAddressDao.class);
-        return addressDao.findAll();
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IAddressDao addressDao = session.getMapper(IAddressDao.class);
+            return addressDao.findAll();
+        }
     }
 }

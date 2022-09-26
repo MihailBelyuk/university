@@ -25,5 +25,6 @@
     <resultMap id="ChairResultMap" type="com.solvd.university.domain.university.Chair" autoMapping="false">
         <id property="id" column="chair_id"/>
         <result property="name" column="chair_name"/>
+        <collection property="teachers" resultMap="com.solvd.university.dao.ITeacherDao.TeacherResultMap"/>
     </resultMap>
 </mapper>

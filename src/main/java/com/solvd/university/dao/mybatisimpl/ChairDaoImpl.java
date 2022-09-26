@@ -12,37 +12,42 @@ public class ChairDaoImpl implements IChairDao {
 
     @Override
     public void create(Chair chair) {
-        SqlSession sqlSession = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IChairDao chairDao = sqlSession.getMapper(IChairDao.class);
-        chairDao.create(chair);
+        try (SqlSession sqlSession = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IChairDao chairDao = sqlSession.getMapper(IChairDao.class);
+            chairDao.create(chair);
+        }
     }
 
     @Override
     public Optional<Chair> findById(Long id) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IChairDao chairDao = session.getMapper(IChairDao.class);
-        return chairDao.findById(id);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IChairDao chairDao = session.getMapper(IChairDao.class);
+            return chairDao.findById(id);
+        }
     }
 
 
     @Override
     public void update(Chair chair) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IChairDao chairDao = session.getMapper(IChairDao.class);
-        chairDao.update(chair);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IChairDao chairDao = session.getMapper(IChairDao.class);
+            chairDao.update(chair);
+        }
     }
 
     @Override
     public void delete(Chair chair) {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IChairDao chairDao = session.getMapper(IChairDao.class);
-        chairDao.delete(chair);
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IChairDao chairDao = session.getMapper(IChairDao.class);
+            chairDao.delete(chair);
+        }
     }
 
     @Override
     public List<Chair> findAll() {
-        SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true);
-        IChairDao chairDao = session.getMapper(IChairDao.class);
-        return chairDao.findAll();
+        try (SqlSession session = MyBatisConfig.getSqlSessionFactory().openSession(true)) {
+            IChairDao chairDao = session.getMapper(IChairDao.class);
+            return chairDao.findAll();
+        }
     }
 }
