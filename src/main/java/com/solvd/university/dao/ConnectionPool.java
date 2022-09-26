@@ -12,7 +12,6 @@ public class ConnectionPool {
 
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
-    private static final String DB_PROPERTIES = "properties/db.properties";
     private static final String DRIVER = "driver";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
@@ -22,9 +21,9 @@ public class ConnectionPool {
     private final ArrayBlockingQueue<Connection> connections;
 
     private ConnectionPool() {
-        int poolSize = Integer.parseInt(PropertyReader.givePropertyValue(POOL_SIZE, DB_PROPERTIES));
+        int poolSize = Integer.parseInt(PropertyReader.getValue(POOL_SIZE));
         try {
-            Class.forName(PropertyReader.givePropertyValue(DRIVER, DB_PROPERTIES));
+            Class.forName(PropertyReader.getValue(DRIVER));
         } catch (ClassNotFoundException e) {
             LOGGER.error("Failed o register driver.", e);
             throw new RuntimeException("Failed o register driver.", e);
@@ -38,9 +37,9 @@ public class ConnectionPool {
     public Connection createConnection() {
         Connection connection;
         try {
-            String user = PropertyReader.givePropertyValue(USER, DB_PROPERTIES);
-            String password = PropertyReader.givePropertyValue(PASSWORD, DB_PROPERTIES);
-            String url = PropertyReader.givePropertyValue(URL, DB_PROPERTIES);
+            String user = PropertyReader.getValue(USER);
+            String password = PropertyReader.getValue(PASSWORD);
+            String url = PropertyReader.getValue(URL);
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             LOGGER.error("Failed to get connection", e);

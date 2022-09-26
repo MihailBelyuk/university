@@ -79,7 +79,6 @@ public class ChairDaoImpl implements IChairDao {
         return Optional.ofNullable(chair);
     }
 
-
     @Override
     public void update(Chair chair) {
         Connection connection = CONNECTION_POOL.getConnection();

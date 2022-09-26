@@ -41,7 +41,6 @@ public class DeanDaoImpl implements IDeanDao {
     private static final String DEAN_BIRTHDAY = "dean_birthday";
     private static final String DEAN_SALARY = "dean_salary";
 
-
     @Override
     public void create(Dean dean, Long addressesId) {
         Connection connection = CONNECTION_POOL.getConnection();

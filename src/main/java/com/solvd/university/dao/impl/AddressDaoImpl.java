@@ -23,9 +23,12 @@ public class AddressDaoImpl implements IAddressDao {
     private static final String INSERT_ADDRESS = "insert into addresses(city, street, house, flat, post_index) " +
             "values (?,?,?,?,?)";
     private static final String DELETE_ADDRESS = "delete from addresses where id=?";
-    private static final String SHOW_ALL_ADDRESSES = "select id as address_id, city, street, house,flat,post_index from addresses";
-    private static final String UPDATE_ADDRESS = "update addresses set city=?, street=?, house=?, flat=?, post_index=? where id=?";
-    private static final String FIND_BY_ID = "select id as address_id,city,street,house,flat,post_index from addresses where id=?";
+    private static final String SHOW_ALL_ADDRESSES = "select id as address_id, city, street, house,flat,post_index " +
+            "from addresses";
+    private static final String UPDATE_ADDRESS = "update addresses set city=?, street=?, house=?, flat=?, post_index=? " +
+            "where id=?";
+    private static final String FIND_BY_ID = "select id as address_id,city,street,house,flat,post_index from addresses " +
+            "where id=?";
 
     private static final String ADDRESS_ID = "address_id";
     private static final String CITY = "city";
