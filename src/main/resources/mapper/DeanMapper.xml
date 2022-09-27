@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.university.dao.IDeanDao">
+
+    <insert id="create" keyProperty="dean.id" useGeneratedKeys="true">
+        insert into deans(first_name, last_name, birthday, salary, addresses_id) values (#{dean.firstName},
+        #{dean.lastName}, #{dean.birthday}, #{dean.salary}, #{addressId})
+    </insert>
+
+    <select id="findById" resultMap="DeanResultMap">
+        select d.id as dean_id, d.first_name as dean_first_name, d.last_name as dean_last_name, d.birthday as
+        dean_birthday, d.salary as dean_salary, a.city as address_city, a.street as address_street, a.house as
+        address_house from deans d left join addresses a on a.id=d.addresses_id where d.id = #{id}
+    </select>
+
+    <update id="update">
+        update deans set first_name = #{dean.firstName}, addresses_id = #{addressId} where id = #{dean.id}
+    </update>
+
+    <delete id="delete">
+        delete from deans where id = #{id}
+    </delete>
+
+    <select id="findAll" resultMap="DeanResultMap">
+        select d.first_name as dean_first_name, d.last_name as dean_last_name, a.id as address_id, a.city as
+        address_city, a.street as address_street from deans d left join addresses a on a.id = d.addresses_id
+    </select>
+
+    <resultMap id="DeanResultMap" type="com.solvd.university.domain.university.person.Dean" autoMapping="false">
+        <id property="id" column="dean_id"/>
+        <result property="firstName" column="dean_first_name"/>
+        <result property="lastName" column="dean_last_name"/>
+        <result property="birthday" column="dean_birthday"/>
+        <result property="salary" column="dean_salary"/>
+        <association property="address" resultMap="com.solvd.university.dao.IAddressDao.AddressResultMap"/>
+    </resultMap>
+</mapper>
