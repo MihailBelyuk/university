@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ITeacherDao {
 
-    void create(Teacher teacher, Long addressesId, Long chairsId);
+    void create(@Param("teacher") Teacher teacher, @Param("addressId") Long addressId, @Param("chairId") Long chairsId);
 
     Optional<Teacher> findById(Long id);
 

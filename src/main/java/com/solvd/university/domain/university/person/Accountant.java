@@ -12,6 +12,7 @@ public class Accountant {
     private String lastName;
     private LocalDate birthday;
     private Address address;
+    private BigDecimal salary;
 
     public Long getId() {
         return id;
@@ -20,16 +21,6 @@ public class Accountant {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    private BigDecimal salary;
 
     public String getFirstName() {
         return firstName;
@@ -53,6 +44,14 @@ public class Accountant {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public BigDecimal getSalary() {

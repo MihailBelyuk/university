@@ -17,7 +17,7 @@
 
     <select id="findById" resultMap="TeacherResultMap">
         <include refid="findIdAndName"/>
-        from teachers where id = #{id}
+        from teachers t left join addresses a on a.id=t.addresses_id where t.id = #{id}
     </select>
 
     <select id="findAll" resultMap="TeacherResultMap">

@@ -9,52 +9,79 @@ public class Address {
     private Integer flat;
     private Integer index;
 
-    public Long getId() {
-        return id;
+    public static AddressBuilder builder() {
+        return new AddressBuilder(new Address());
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public AddressBuilder toBuilder() {
+        return new AddressBuilder(this);
+    }
+
+    public static class AddressBuilder {
+
+        private final Address address;
+
+        public AddressBuilder(Address address) {
+            this.address = address;
+        }
+
+        public AddressBuilder id(Long id) {
+            this.address.id = id;
+            return this;
+        }
+
+        public AddressBuilder city(String city) {
+            this.address.city = city;
+            return this;
+        }
+
+        public AddressBuilder street(String street) {
+            this.address.street = street;
+            return this;
+        }
+
+        public AddressBuilder house(Integer house) {
+            this.address.house = house;
+            return this;
+        }
+
+        public AddressBuilder flat(Integer flat) {
+            this.address.flat = flat;
+            return this;
+        }
+
+        public AddressBuilder index(Integer index) {
+            this.address.index = index;
+            return this;
+        }
+
+        public Address build() {
+            return address;
+        }
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getStreet() {
         return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
     }
 
     public Integer getHouse() {
         return house;
     }
 
-    public void setHouse(Integer house) {
-        this.house = house;
-    }
-
     public Integer getFlat() {
         return flat;
     }
 
-    public void setFlat(Integer flat) {
-        this.flat = flat;
-    }
-
     public Integer getIndex() {
         return index;
-    }
-
-    public void setIndex(Integer index) {
-        this.index = index;
     }
 
     @Override

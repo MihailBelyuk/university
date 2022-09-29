@@ -24,8 +24,8 @@ public class DeanDaoImpl implements IDeanDao {
 
     private static final String CREATE_DEAN = "create into deans(first_name, last_name, birthday, " +
             "salary, addresses_id values (?, ?, ?, ?, ?)";
-    private static final String FIND_BY_ID = "select id as dean_id, first_name as dean_name, " +
-            "last_name as dean_last_name, birthday as dean_birthday, salary as dean_salary where id = ?";
+    private static final String FIND_BY_ID = "select id as dean_id, first_name as dean_first_name, " +
+            "last_name as dean_last_name, birthday as dean_birthday, salary as dean_salary from deans where id = ?";
     private static final String UPDATE = "update deans set first_name = ?, last_name = ?, birthday = ?, salary = ?, " +
             "addresses_id = ? where id = ?";
     private static final String DELETE = "delete from deans where id = ?";
@@ -67,13 +67,11 @@ public class DeanDaoImpl implements IDeanDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Address address = AddressDaoImpl.mapAddress(resultSet);
                 dean = deanMapper(resultSet);
-                dean.setAddress(address);
             }
         } catch (SQLException e) {
-            LOGGER.error("Failed to fin dean with id " + id, e);
-            throw new RetrieveInformationFailedException("Failed to fin dean with id " + id, e);
+            LOGGER.error("Failed to find dean with id " + id, e);
+            throw new RetrieveInformationFailedException("Failed to find dean with id " + id, e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -113,6 +111,9 @@ public class DeanDaoImpl implements IDeanDao {
         }
     }
 
+    /**
+     * Builder pattern is used to set id to address and address for dean.
+     */
     @Override
     public List<Dean> findAll() {
         List<Dean> deans = new ArrayList<>();
@@ -121,9 +122,13 @@ public class DeanDaoImpl implements IDeanDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Address address = new Address();
-                address.setId(resultSet.getLong(ADDRESS_ID));
+                address.toBuilder()
+                        .id(resultSet.getLong(ADDRESS_ID))
+                        .build();
                 Dean dean = deanMapper(resultSet);
-                dean.setAddress(address);
+                dean.toBuilder()
+                        .address(address)
+                        .build();
                 deans.add(dean);
             }
         } catch (SQLException e) {
@@ -135,13 +140,15 @@ public class DeanDaoImpl implements IDeanDao {
         return deans;
     }
 
+    /**
+     * Builder pattern is used to set address for dean;
+     */
     public static Dean deanMapper(ResultSet resultSet) throws SQLException {
-        Dean dean = new Dean();
-        dean.setId(resultSet.getLong(DEAN_ID));
-        dean.setFirstName((resultSet.getString(DEAN_FIRST_NAME)));
-        dean.setLastName(resultSet.getString(DEAN_LAST_NAME));
-        dean.setBirthday(LocalDate.parse(resultSet.getString(DEAN_BIRTHDAY)));
-        dean.setSalary(resultSet.getBigDecimal(DEAN_SALARY));
-        return dean;
+        return Dean.builder().id(resultSet.getLong(DEAN_ID))
+                .firstName(resultSet.getString(DEAN_FIRST_NAME))
+                .lastName(resultSet.getString(DEAN_LAST_NAME))
+                .birthday(LocalDate.parse(resultSet.getString(DEAN_BIRTHDAY)))
+                .salary(resultSet.getBigDecimal(DEAN_SALARY))
+                .build();
     }
 }

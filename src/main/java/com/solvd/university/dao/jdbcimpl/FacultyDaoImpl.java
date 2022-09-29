@@ -36,6 +36,8 @@ public class FacultyDaoImpl implements IFacultyDao {
 
     private static final String FACULTY_ID = "faculty_id";
     private static final String FACULTY_NAME = "faculty_name";
+    private static final String CHAIR_NAME = "chair_name";
+    private static final String CHAIR_ID = "chair_id";
 
     @Override
     public void create(Faculty faculty, Long deansId, Long universitiesId) {
@@ -98,7 +100,7 @@ public class FacultyDaoImpl implements IFacultyDao {
             }
             chairs.add(chair);
             if (faculty != null) {
-                faculty.setChairs(chairs);
+                faculty = Faculty.builder().chairs(chairs).build();
             }
         } catch (SQLException e) {
             LOGGER.error("Failed to retrieve faculty information.", e);
@@ -126,21 +128,28 @@ public class FacultyDaoImpl implements IFacultyDao {
         return faculties;
     }
 
+    /**
+     * Builder patten is used to create mutable object of Faculty
+     * with less code and better readability.
+     */
     public static Faculty mapFaculty(ResultSet resultSet) throws SQLException {
         List<Chair> chairs = new ArrayList<>();
-        Faculty faculty = new Faculty();
-        faculty.setId(resultSet.getLong(FACULTY_ID));
-        faculty.setName(resultSet.getString(FACULTY_NAME));
-        faculty.setChairs(chairs);
-        return faculty;
+        return Faculty.builder()
+                .chairs(chairs)
+                .id(resultSet.getLong(FACULTY_ID))
+                .name(FACULTY_NAME).build();
     }
 
+    /**
+     * Builder patten is used to create mutable object of Chair
+     * with less code and better readability.
+     */
     public static Chair mapChairs(ResultSet resultSet) throws SQLException {
-        Chair chair = new Chair();
-        chair.setName(resultSet.getString("chair_name"));
-        chair.setId(resultSet.getLong("chair_id"));
-        chair.setTeachers(new ArrayList<>());
-        return chair;
+        return Chair.builder()
+                .name(resultSet.getString(CHAIR_NAME))
+                .id(resultSet.getLong(CHAIR_ID))
+                .teachers(new ArrayList<>())
+                .build();
     }
 
     private Chair getChair(List<Chair> chairs, Chair chair, Chair current, Teacher teacher) {
