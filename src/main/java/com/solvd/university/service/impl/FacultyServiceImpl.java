@@ -1,6 +1,7 @@
 package com.solvd.university.service.impl;
 
 //import com.solvd.university.dao.jdbcimpl.FacultyDaoImpl;
+
 import com.solvd.university.dao.mybatisimpl.FacultyDaoImpl;
 import com.solvd.university.domain.exception.EmptyListException;
 import com.solvd.university.domain.exception.NotFullInformationProvidedException;
@@ -31,6 +32,11 @@ public class FacultyServiceImpl implements IFacultyService {
         facultyDao.create(faculty, deansId, universitiesId);
     }
 
+    /**
+     * Facade pattern.
+     * All logic for extracting Faculty object from DB
+     * is encapsulated in this method.
+     */
     @Override
     public Faculty getById(Long id) {
         return facultyDao.findById(id)

@@ -59,7 +59,9 @@ public class TeacherDaoImpl implements ITeacherDao {
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
-                teacher.setId(resultSet.getLong(1));
+                teacher.toBuilder()
+                        .id(resultSet.getLong(1))
+                        .build();
             }
         } catch (SQLException e) {
             LOGGER.error("Failed to create new teacher record.", e);
@@ -79,7 +81,9 @@ public class TeacherDaoImpl implements ITeacherDao {
             while (resultSet.next()) {
                 Address address = AddressDaoImpl.mapAddress(resultSet);
                 teacher = mapTeacher(resultSet);
-                teacher.setAddress(address);
+                teacher.toBuilder()
+                        .address(address)
+                        .build();
             }
         } catch (SQLException e) {
             LOGGER.error("Failed to find teacher with id " + id, e);
@@ -133,7 +137,9 @@ public class TeacherDaoImpl implements ITeacherDao {
             while (resultSet.next()) {
                 Address address = AddressDaoImpl.mapAddress(resultSet);
                 Teacher teacher = mapTeacher(resultSet);
-                teacher.setAddress(address);
+                teacher.toBuilder()
+                        .address(address)
+                        .build();
                 teachers.add(teacher);
             }
         } catch (SQLException e) {
@@ -145,17 +151,26 @@ public class TeacherDaoImpl implements ITeacherDao {
         return teachers;
     }
 
+    /**
+     * Builder patten is used to create mutable object of Teacher
+     * with less code and better readability.
+     */
     public static Teacher mapTeacher(ResultSet resultSet) throws SQLException {
         Teacher teacher = new Teacher();
-        teacher.setId(resultSet.getLong(TEACHER_ID));
-        teacher.setFirstName((resultSet.getString(TEACHER_FIRST_NAME)));
-        teacher.setLastName(resultSet.getString(TEACHER_LAST_NAME));
+        teacher.toBuilder().id(resultSet.getLong(TEACHER_ID))
+                .firstName(resultSet.getString(TEACHER_FIRST_NAME))
+                .lastName(resultSet.getString(TEACHER_LAST_NAME))
+                .build();
         if (resultSet.getString(TEACHER_BIRTHDAY) != null) {
-            teacher.setBirthday(LocalDate.parse(resultSet.getString(TEACHER_BIRTHDAY)));
+            teacher.toBuilder()
+                    .birthday(LocalDate.parse(resultSet.getString(TEACHER_BIRTHDAY)))
+                    .build();
         }
-        teacher.setSalary(resultSet.getBigDecimal(TEACHER_SALARY));
+        teacher.toBuilder().salary(resultSet.getBigDecimal(TEACHER_SALARY)).build();
         if (resultSet.getString(TEACHER_ACADEMIC_STATUS) != null) {
-            teacher.setAcademicStatus(AcademicStatus.valueOf((resultSet.getString(TEACHER_ACADEMIC_STATUS))));
+            teacher.toBuilder()
+                    .academicStatus(AcademicStatus.valueOf((resultSet.getString(TEACHER_ACADEMIC_STATUS))))
+                    .build();
         }
         return teacher;
     }

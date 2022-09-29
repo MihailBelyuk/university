@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface IFacultyDao {
 
-    void create(Faculty faculty, Long deansId, Long universitiesId);
+    void create(@Param("faculty") Faculty faculty, @Param("deanId") Long deansId, @Param("universityId") Long universitiesId);
 
     Optional<Faculty> findById(Long id);
 

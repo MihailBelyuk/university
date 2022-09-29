@@ -13,52 +13,70 @@ public class Faculty {
     private List<Chair> chairs;
     private List<Student> students;
 
+    public static FacultyBuilder builder() {
+        return new FacultyBuilder(new Faculty());
+    }
+
+    public FacultyBuilder toBuilder() {
+        return new FacultyBuilder(this);
+    }
+
+    public static class FacultyBuilder {
+        private final Faculty faculty;
+
+
+        public FacultyBuilder(Faculty faculty) {
+            this.faculty = faculty;
+        }
+
+        public FacultyBuilder id(Long id) {
+            this.faculty.id = id;
+            return this;
+        }
+
+        public FacultyBuilder name(String name) {
+            this.faculty.name = name;
+            return this;
+        }
+
+        public FacultyBuilder dean(Dean dean) {
+            this.faculty.dean = dean;
+            return this;
+        }
+
+        public FacultyBuilder chairs(List<Chair> chairs) {
+            this.faculty.chairs = chairs;
+            return this;
+        }
+
+        public FacultyBuilder students(List<Student> students) {
+            this.faculty.students = students;
+            return this;
+        }
+
+        public Faculty build() {
+            return faculty;
+        }
+    }
+
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Chair> getChairs() {
-        return chairs;
-    }
-
-    public void setChairs(List<Chair> chairs) {
-        this.chairs = chairs;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Dean getDean() {
         return dean;
     }
 
-    public void setDean(Dean dean) {
-        this.dean = dean;
-    }
-
-    public List<Chair> getDepartments() {
+    public List<Chair> getChairs() {
         return chairs;
-    }
-
-    public void setDepartments(List<Chair> chairs) {
-        this.chairs = chairs;
     }
 
     public List<Student> getStudents() {
         return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
     }
 
     @Override

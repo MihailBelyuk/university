@@ -10,28 +10,51 @@ public class Chair {
     private String name;
     private List<Teacher> teachers;
 
-    public Long getId() {
-        return id;
+    public static ChairBuilder builder() {
+        return new ChairBuilder(new Chair());
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public ChairBuilder toBuilder() {
+        return new ChairBuilder(this);
+    }
+
+    public static class ChairBuilder {
+        private final Chair chair;
+
+        public ChairBuilder(Chair chair) {
+            this.chair = chair;
+        }
+
+        public ChairBuilder id(Long id) {
+            this.chair.id = id;
+            return this;
+        }
+
+        public ChairBuilder name(String name) {
+            this.chair.name = name;
+            return this;
+        }
+
+        public ChairBuilder teachers(List<Teacher> teachers) {
+            this.chair.teachers = teachers;
+            return this;
+        }
+
+        public Chair build() {
+            return chair;
+        }
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public List<Teacher> getTeachers() {
         return teachers;
-    }
-
-    public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
     }
 
     @Override

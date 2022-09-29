@@ -11,77 +11,91 @@ public class Teacher {
     private String firstName;
     private String lastName;
     private LocalDate birthday;
-    private AcademicStatus academicStatus;
     private Address address;
     private BigDecimal salary;
+    private AcademicStatus academicStatus;
+
+    public static TeacherBuilder builder() {
+        return new TeacherBuilder(new Teacher());
+    }
+
+    public TeacherBuilder toBuilder() {
+        return new TeacherBuilder(this);
+    }
+
+    public static class TeacherBuilder {
+
+        private final Teacher teacher;
+
+        public TeacherBuilder(Teacher teacher) {
+            this.teacher = teacher;
+        }
+
+        public TeacherBuilder id(Long id) {
+            this.teacher.id = id;
+            return this;
+        }
+
+        public TeacherBuilder firstName(String firstName) {
+            this.teacher.firstName = firstName;
+            return this;
+        }
+
+        public TeacherBuilder lastName(String lastName) {
+            this.teacher.lastName = lastName;
+            return this;
+        }
+
+        public TeacherBuilder birthday(LocalDate birthday) {
+            this.teacher.birthday = birthday;
+            return this;
+        }
+
+        public TeacherBuilder address(Address address) {
+            this.teacher.address = address;
+            return this;
+        }
+
+        public TeacherBuilder salary(BigDecimal salary) {
+            this.teacher.salary = salary;
+            return this;
+        }
+
+        public TeacherBuilder academicStatus(AcademicStatus academicStatus) {
+            this.teacher.academicStatus = academicStatus;
+            return this;
+        }
+
+        public Teacher build() {
+            return teacher;
+        }
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public AcademicStatus getAcademicStatus() {
-        return academicStatus;
-    }
-
-    public void setAcademicStatus(AcademicStatus academicStatus) {
-        this.academicStatus = academicStatus;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
+    public Address getAddress() {
+        return address;
     }
 
     public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Teacher{");
-        sb.append("id=").append(id);
-        sb.append(", firstName='").append(firstName).append('\'');
-        sb.append(", lastName='").append(lastName).append('\'');
-        sb.append(", birthday=").append(birthday);
-        sb.append(", academicStatus=").append(academicStatus);
-        sb.append(", address=").append(address);
-        sb.append(", salary=").append(salary);
-        sb.append('}');
-        return sb.toString();
+    public AcademicStatus getAcademicStatus() {
+        return academicStatus;
     }
 }

@@ -23,14 +23,6 @@ public class TradeUnionChairman {
         this.id = id;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -53,6 +45,14 @@ public class TradeUnionChairman {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public BigDecimal getSalary() {

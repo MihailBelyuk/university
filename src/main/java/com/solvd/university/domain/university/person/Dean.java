@@ -14,53 +14,79 @@ public class Dean {
     private Address address;
     private BigDecimal salary;
 
+    public static DeanBuilder builder() {
+        return new DeanBuilder(new Dean());
+    }
+
+    public DeanBuilder toBuilder() {
+        return new DeanBuilder(this);
+    }
+
+    public static class DeanBuilder {
+
+        private final Dean dean;
+
+        public DeanBuilder(Dean dean) {
+            this.dean = dean;
+        }
+
+        public DeanBuilder id(Long id) {
+            this.dean.id = id;
+            return this;
+        }
+
+        public DeanBuilder firstName(String firstName) {
+            this.dean.firstName = firstName;
+            return this;
+        }
+
+        public DeanBuilder lastName(String lastName) {
+            this.dean.lastName = lastName;
+            return this;
+        }
+
+        public DeanBuilder birthday(LocalDate birthday) {
+            this.dean.birthday = birthday;
+            return this;
+        }
+
+        public DeanBuilder salary(BigDecimal salary) {
+            this.dean.salary = salary;
+            return this;
+        }
+
+        public DeanBuilder address(Address address) {
+            this.dean.address = address;
+            return this;
+        }
+
+        public Dean build() {
+            return dean;
+        }
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
+    public Address getAddress() {
+        return address;
     }
 
     public BigDecimal getSalary() {
         return salary;
-    }
-
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
     }
 
     @Override

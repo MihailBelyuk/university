@@ -49,7 +49,7 @@ public class AddressDaoImpl implements IAddressDao {
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
-                address.setId(resultSet.getLong(1));
+                address.toBuilder().id(resultSet.getLong(1)).build();
             }
         } catch (SQLException e) {
             LOGGER.error("Failed to add new Address to the DB.");
@@ -130,14 +130,18 @@ public class AddressDaoImpl implements IAddressDao {
         return addresses;
     }
 
+    /**
+     * Builder patten is used to create mutable object of Address
+     * with less code and better readability.
+     */
     public static Address mapAddress(ResultSet resultSet) throws SQLException {
-        Address address = new Address();
-        address.setId(resultSet.getLong(ADDRESS_ID));
-        address.setCity(resultSet.getString(CITY));
-        address.setStreet(resultSet.getString(STREET));
-        address.setHouse(resultSet.getInt(HOUSE));
-        address.setFlat(resultSet.getInt(FLAT));
-        address.setIndex(resultSet.getInt(POST_INDEX));
-        return address;
+        return Address.builder()
+                .id(resultSet.getLong(ADDRESS_ID))
+                .city(resultSet.getString(CITY))
+                .street(resultSet.getString(STREET))
+                .house(resultSet.getInt(HOUSE))
+                .flat(resultSet.getInt(FLAT))
+                .index(resultSet.getInt(POST_INDEX))
+                .build();
     }
 }

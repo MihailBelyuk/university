@@ -35,6 +35,9 @@ public class ChairDaoImpl implements IChairDao {
     private static final String TEACHER_FIRST_NAME = "teacher_first_name";
     private static final String TEACHER_LAST_NAME = "teacher_last_name";
 
+    /**
+     * Builder patten is used to set chair id for mutable chair.
+     */
     @Override
     public void create(Chair chair) {
         Connection connection = CONNECTION_POOL.getConnection();
@@ -43,7 +46,9 @@ public class ChairDaoImpl implements IChairDao {
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
-                chair.setId(resultSet.getLong(1));
+                chair.toBuilder()
+                        .id(resultSet.getLong(1))
+                        .build();
             }
         } catch (SQLException e) {
             LOGGER.error("Failed to add new chair to the DB.", e);
@@ -53,6 +58,9 @@ public class ChairDaoImpl implements IChairDao {
         }
     }
 
+    /**
+     * Builder patten is used to create mutable teacher and set teachers for mutable chair.
+     */
     @Override
     public Optional<Chair> findById(Long id) {
         Chair chair = null;
@@ -63,12 +71,15 @@ public class ChairDaoImpl implements IChairDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 chair = mapChair(resultSet);
-                Teacher teacher = new Teacher();
-                teacher.setId(resultSet.getLong(TEACHER_ID));
-                teacher.setFirstName(resultSet.getString(TEACHER_FIRST_NAME));
-                teacher.setLastName((resultSet.getString(TEACHER_LAST_NAME)));
+                Teacher teacher = Teacher.builder()
+                        .firstName(resultSet.getString(TEACHER_FIRST_NAME))
+                        .lastName(resultSet.getString(TEACHER_LAST_NAME))
+                        .id(resultSet.getLong(TEACHER_ID))
+                        .build();
                 teachers.add(teacher);
-                chair.setTeachers(teachers);
+                chair.toBuilder()
+                        .teachers(teachers)
+                        .build();
             }
         } catch (SQLException e) {
             LOGGER.error("Failed to find chair with id " + id, e);
@@ -126,10 +137,14 @@ public class ChairDaoImpl implements IChairDao {
         return chairs;
     }
 
+    /**
+     * Builder patten is used to create mutable object of Chair
+     * with less code and better readability.
+     */
     public static Chair mapChair(ResultSet resultSet) throws SQLException {
-        Chair chair = new Chair();
-        chair.setId(resultSet.getLong(CHAIR_ID));
-        chair.setName(resultSet.getString(CHAIR_NAME));
-        return chair;
+        return Chair.builder()
+                .id(resultSet.getLong(CHAIR_ID))
+                .name(resultSet.getString(CHAIR_NAME))
+                .build();
     }
 }
